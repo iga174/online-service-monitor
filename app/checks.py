@@ -51,14 +51,14 @@ def check_service(service, db):
 @router.post("/services/{id}/check")
 def measure_response_time(id: int, db: Session = Depends(get_db)):
     service = db.query(Service).filter(Service.id == id).first()
-    if service == None:
+    if service is None:
         raise HTTPException(status_code=404, detail="Service not found")
     return check_service(service, db)
 
 @router.get("/services/{id}/checks")
 def get_checks(id: int, db: Session = Depends(get_db)):
     service = db.query(Service).filter(Service.id == id).first()
-    if service == None:
+    if service is None:
         raise HTTPException(status_code=404, detail="Service not found")
             
     checks = db.query(ServiceCheckDB).filter(ServiceCheckDB.service_id == id).all()
@@ -74,7 +74,7 @@ def check_all_services():
     finally:
         db.close()
             
-# run get_checks(id) every 60s
+# run check_all_services() every 60s
 schedule.every(60).seconds.do(check_all_services)
 
 def run_scheduler():

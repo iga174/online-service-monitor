@@ -6,8 +6,8 @@ class ServiceCreate(BaseModel):
     url: str
 
 class ServiceCheck(BaseModel):
-    checked_at : datetime
-    reachable : bool 
+    checked_at: datetime
+    reachable: bool 
     status_code: int | None
     response_time: float | None
 
